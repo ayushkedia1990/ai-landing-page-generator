@@ -24,13 +24,22 @@ Completed so far:
 - Simple generated content editor for hero, social proof labels, feature items, FAQ items, and final CTA text
 - Local development database wiring fixed with a real root `DATABASE_URL`
 - Local Docker Postgres is running on port `5433` and Prisma connectivity is verified
+- OpenRouter-compatible provider config added for free-model testing
+- LLM config now strips accidental quote characters from pasted env values and surfaces clearer OpenRouter auth errors
+- OpenRouter now falls back to the documented free model slug when `OPENAI_MODEL` is left blank
+- OpenRouter now uses the live `openrouter/free` router by default so blank model config does not point at a stale free-model slug
+- Vercel deployments now boot in public preview mode when Clerk env vars are missing instead of crashing in middleware
 
 Current planned next slice:
-- Milestone 9 publish flow at `/p/[slug]`
 - Milestone 10 polish for empty states, error handling, and deploy readiness
+- Publish flow is intentionally deferred for now
 
 Current blocker/status notes:
 - No active blocker from Prisma setup. Local Postgres is being provided through Docker on port `5433` because no Windows PostgreSQL service was present and port `5432` was already in use.
+- For OpenRouter testing, put the key in the root `.env` file under `OPENROUTER_API_KEY` and set `OPENAI_MODEL` to the free model slug you want to use.
+- Current generation issue: a malformed pasted OpenRouter key should now fail with a clearer auth message instead of the opaque `User not found` provider error.
+- Current generation issue update: if `OPENAI_MODEL` is left blank with OpenRouter enabled, generation now routes through `openrouter/free`; if a manually pinned slug has no endpoints, the app now returns a targeted fix message.
+- Vercel deployment note: set `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` to enable auth, and replace the local `DATABASE_URL` with a hosted Postgres connection string if you want dashboard/project flows to work in production.
 
 The MVP should allow a user to:
 1. sign in
@@ -432,13 +441,12 @@ The MVP is done when:
 
 ## Immediate Next Step
 
-Continue with **Milestone 9**.
+Continue with **Milestone 10** while publish stays deferred.
 
 Next task:
-- add a publish action/button on the project detail page
-- generate and persist a unique `published_slug`
-- set `published = true`
-- create the public route at `/p/[slug]`
-- render the saved `generated_page` from the database
+- add loading and empty states where the UX is still rough
+- tighten basic error states around generation and editing
+- confirm auth and ownership checks across project routes
+- keep publish flow deferred until requested again
 
-After publish works, move to Milestone 10 polish.
+When polish is done, revisit publish only if requested.

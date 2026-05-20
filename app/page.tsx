@@ -1,11 +1,13 @@
-import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { getClerkSetupMessage, isClerkConfigured } from "@/lib/clerk";
+import { getOptionalUserId } from "@/lib/auth";
 import { stylePresets } from "@/lib/style-presets";
 
 export default async function Home() {
-  const { userId } = await auth();
+  const userId = await getOptionalUserId();
+  const clerkConfigured = isClerkConfigured();
 
   if (userId) {
     redirect("/dashboard");
@@ -20,24 +22,35 @@ export default async function Home() {
               AI Landing Page Generator
             </p>
           </div>
-          <div className="flex items-center gap-3 text-sm font-medium">
-            <Link
-              href="/sign-in"
-              className="rounded-full px-4 py-2 text-muted-foreground transition hover:text-foreground"
-            >
-              Sign in
-            </Link>
-            <Link
-              href="/sign-up"
-              className="rounded-full bg-foreground px-4 py-2 text-background transition hover:opacity-90"
-            >
-              Start building
-            </Link>
-          </div>
+          {clerkConfigured ? (
+            <div className="flex items-center gap-3 text-sm font-medium">
+              <Link
+                href="/sign-in"
+                className="rounded-full px-4 py-2 text-muted-foreground transition hover:text-foreground"
+              >
+                Sign in
+              </Link>
+              <Link
+                href="/sign-up"
+                className="rounded-full bg-foreground px-4 py-2 text-background transition hover:opacity-90"
+              >
+                Start building
+              </Link>
+            </div>
+          ) : (
+            <div className="rounded-full border border-amber-300/80 bg-amber-50 px-4 py-2 text-sm font-medium text-amber-950">
+              Preview deployment
+            </div>
+          )}
         </header>
 
         <section className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="space-y-8">
+            {!clerkConfigured ? (
+              <div className="rounded-3xl border border-amber-300/80 bg-amber-50 px-5 py-4 text-sm leading-7 text-amber-950 shadow-[0_12px_30px_rgba(146,64,14,0.08)]">
+                {getClerkSetupMessage()}
+              </div>
+            ) : null}
             <div className="inline-flex items-center rounded-full border border-border/80 bg-card px-4 py-2 text-sm text-muted-foreground shadow-[0_12px_30px_rgba(16,19,35,0.06)]">
               First milestone: sign in, create a project, save the guided brief.
             </div>
@@ -50,20 +63,26 @@ export default async function Home() {
                 choose a preset, then generate and publish from one app.
               </p>
             </div>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/sign-up"
-                className="rounded-full bg-accent px-6 py-3 text-center text-sm font-semibold text-accent-foreground shadow-[0_16px_40px_rgba(23,105,255,0.28)] transition hover:-translate-y-0.5"
-              >
-                Create your account
-              </Link>
-              <Link
-                href="/sign-in"
-                className="rounded-full border border-border bg-card-strong px-6 py-3 text-center text-sm font-semibold transition hover:bg-white"
-              >
-                I already have access
-              </Link>
-            </div>
+            {clerkConfigured ? (
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href="/sign-up"
+                  className="rounded-full bg-accent px-6 py-3 text-center text-sm font-semibold text-accent-foreground shadow-[0_16px_40px_rgba(23,105,255,0.28)] transition hover:-translate-y-0.5"
+                >
+                  Create your account
+                </Link>
+                <Link
+                  href="/sign-in"
+                  className="rounded-full border border-border bg-card-strong px-6 py-3 text-center text-sm font-semibold transition hover:bg-white"
+                >
+                  I already have access
+                </Link>
+              </div>
+            ) : (
+              <div className="rounded-3xl border border-border/80 bg-card-strong px-5 py-4 text-sm leading-7 text-muted-foreground">
+                Auth-dependent routes stay protected, but this deployment is currently running in public preview mode until the Clerk Vercel environment variables are added.
+              </div>
+            )}
           </div>
 
           <div className="glass-panel rounded-4xl border border-border/80 p-6 shadow-[0_20px_60px_rgba(16,19,35,0.12)] sm:p-8">

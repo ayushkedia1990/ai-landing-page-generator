@@ -1,12 +1,24 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
-export async function requireUser() {
-  const session = await auth();
+import { isClerkConfigured } from "@/lib/clerk";
 
-  if (!session.userId) {
-    redirect("/sign-in");
+export async function getOptionalUserId() {
+  if (!isClerkConfigured()) {
+    return null;
   }
 
-  return session.userId;
+  const session = await auth();
+
+  return session.userId ?? null;
+}
+
+export async function requireUser() {
+  const userId = await getOptionalUserId();
+
+  if (!userId) {
+    redirect(isClerkConfigured() ? "/sign-in" : "/");
+  }
+
+  return userId;
 }

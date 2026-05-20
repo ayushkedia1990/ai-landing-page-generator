@@ -29,13 +29,22 @@ Completed so far:
 - Simple generated content editor for hero, social proof labels, features, FAQ items, and final CTA text
 - Local development database wiring fixed with a real root `DATABASE_URL`
 - Local Docker Postgres is running on port `5433` and Prisma connectivity is verified
+- OpenRouter-compatible provider config added for free-model testing
+- LLM config now strips accidental quote characters from pasted env values and surfaces clearer OpenRouter auth errors
+- OpenRouter now falls back to the documented free model slug when `OPENAI_MODEL` is left blank
+- OpenRouter now uses the live `openrouter/free` router by default so blank model config does not point at a stale free-model slug
+- Vercel deployments now boot in public preview mode when Clerk env vars are missing instead of crashing in middleware
 
 Current planned next slice:
-- Publish flow at `/p/[slug]`
 - Final polish for empty states, error handling, auth checks, and deploy readiness
+- Publish flow is deferred for now by request
 
 Current blocker/status notes:
 - No active blocker from Prisma setup. Local development uses Docker PostgreSQL on port `5433` to avoid an existing port `5432` container.
+- For OpenRouter testing, use the root `.env` file and set `OPENROUTER_API_KEY` plus `OPENAI_MODEL` for the model slug you want.
+- Current generation issue: a malformed pasted OpenRouter key should now fail with a clearer auth message instead of the opaque `User not found` provider error.
+- Current generation issue update: if `OPENAI_MODEL` is left blank with OpenRouter enabled, generation now routes through `openrouter/free`; if a manually pinned slug has no endpoints, the app now returns a targeted fix message.
+- Vercel deployment note: set `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` to enable auth, and replace the local `DATABASE_URL` with a hosted Postgres connection string if you want dashboard/project flows to work in production.
 
 ## Core product goal
 
