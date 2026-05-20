@@ -31,6 +31,12 @@ export function resolveStylePresetId(value: string | null | undefined): StylePre
   return defaultStylePreset;
 }
 
+export function getStylePreset(id: StylePresetId) {
+  const preset = stylePresets.find((entry) => entry.id === id);
+
+  return preset ?? stylePresets[0];
+}
+
 export const stylePresets: StylePreset[] = [
   {
     id: "modern-saas",

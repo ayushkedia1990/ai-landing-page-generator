@@ -4,6 +4,39 @@ I am a full stack developer and I want to move fast. Do not design a scalable lo
 
 Your job is to help me **start the project and take the first implementation steps**.
 
+## Working File Update Rule
+
+Whenever `prompt.md` or `TASKS.md` are present in prompt context, update both files during that run.
+
+Each update must capture:
+- completed work since the previous update
+- the current implementation slice
+- the next planned slice
+- any changed assumptions or blockers
+
+## Current Build Status
+
+Last updated: 2026-05-20
+
+Completed so far:
+- App scaffold, auth, Prisma project model, dashboard shell
+- Project creation flow with persistence
+- Guided intake form with saved `input_data`
+- Hardcoded style presets
+- Fixed landing page schema and validation
+- OpenAI generation flow that saves `generated_page`
+- In-app landing page preview
+- Simple generated content editor for hero, social proof labels, features, FAQ items, and final CTA text
+- Local development database wiring fixed with a real root `DATABASE_URL`
+- Local Docker Postgres is running on port `5433` and Prisma connectivity is verified
+
+Current planned next slice:
+- Publish flow at `/p/[slug]`
+- Final polish for empty states, error handling, auth checks, and deploy readiness
+
+Current blocker/status notes:
+- No active blocker from Prisma setup. Local development uses Docker PostgreSQL on port `5433` to avoid an existing port `5432` container.
+
 ## Core product goal
 
 Build a web app where a user can:
@@ -419,22 +452,17 @@ Polish:
 
 I do **not** want a big abstract plan only.
 
-I want you to **start implementation**.
+I want you to continue implementation from the current app state.
 
-Please do the following:
+Please do the following on each run:
 
-1. review the current repository/app state
-2. determine what stack and files already exist
-3. propose the smallest concrete MVP implementation plan based on the existing codebase
-4. identify the **first coding step**
-5. then start making the changes for that first step
+1. read the current status in this file and in `TASKS.md`
+2. update both files as you work so they stay current
+3. identify the next unfinished MVP slice
+4. implement that slice directly in code
+5. validate the changes before stopping
 
-If the repo is empty, then:
-- scaffold the project for the MVP stack
-- create the initial folder structure
-- set up the base app shell
-- define the initial DB schema / types
-- prepare the first end-to-end slice
+Do not restart discovery from zero when the current repo state and progress notes already answer that.
 
 ---
 

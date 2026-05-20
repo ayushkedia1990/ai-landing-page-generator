@@ -4,6 +4,34 @@
 
 Ship a working MVP in **1 week**.
 
+## Update Protocol
+
+- Whenever `prompt.md` or `TASKS.md` are in prompt context, update both files during that run.
+- Each update must include completed work, the current slice, the next planned slice, and any task checkbox changes.
+
+## Current Status
+
+Last updated: 2026-05-20
+
+Completed so far:
+- App scaffold, auth, Prisma setup, dashboard shell
+- Project creation and persistence
+- Guided intake form with saved `input_data`
+- Hardcoded style presets
+- Fixed landing page schema and validation
+- OpenAI generation flow saving `generated_page`
+- In-app landing page preview
+- Simple generated content editor for hero, social proof labels, feature items, FAQ items, and final CTA text
+- Local development database wiring fixed with a real root `DATABASE_URL`
+- Local Docker Postgres is running on port `5433` and Prisma connectivity is verified
+
+Current planned next slice:
+- Milestone 9 publish flow at `/p/[slug]`
+- Milestone 10 polish for empty states, error handling, and deploy readiness
+
+Current blocker/status notes:
+- No active blocker from Prisma setup. Local Postgres is being provided through Docker on port `5433` because no Windows PostgreSQL service was present and port `5432` was already in use.
+
 The MVP should allow a user to:
 1. sign in
 2. create a project
@@ -178,13 +206,13 @@ Use the auth provider’s user model if available instead of overbuilding local 
 ## Milestones
 
 ## Milestone 1 - App foundation
-- [ ] Inspect repo and identify current stack/state
-- [ ] If repo is empty, scaffold the app
-- [ ] Set up Next.js + TypeScript + Tailwind
-- [ ] Set up auth
-- [ ] Set up DB connection
-- [ ] Define initial project model/schema
-- [ ] Create base app shell / dashboard layout
+- [x] Inspect repo and identify current stack/state
+- [x] If repo is empty, scaffold the app
+- [x] Set up Next.js + TypeScript + Tailwind
+- [x] Set up auth
+- [x] Set up DB connection
+- [x] Define initial project model/schema
+- [x] Create base app shell / dashboard layout
 
 ### Deliverable
 A user can sign in and reach a dashboard.
@@ -192,10 +220,10 @@ A user can sign in and reach a dashboard.
 ---
 
 ## Milestone 2 - Project creation
-- [ ] Create project list page
-- [ ] Create new project flow
-- [ ] Persist project in DB
-- [ ] Add project detail page route
+- [x] Create project list page
+- [x] Create new project flow
+- [x] Persist project in DB
+- [x] Add project detail page route
 
 ### Deliverable
 A signed-in user can create and open a project.
@@ -203,20 +231,20 @@ A signed-in user can create and open a project.
 ---
 
 ## Milestone 3 - Guided form input
-- [ ] Build guided intake form
+- [x] Build guided intake form
 - [ ] Include fields:
-  - [ ] project name
-  - [ ] product name
-  - [ ] one-line description
-  - [ ] target audience
-  - [ ] primary CTA
-  - [ ] tone
-  - [ ] style preset
-  - [ ] optional features list
-  - [ ] optional testimonials
-  - [ ] optional FAQs
-- [ ] Save form data to `input_data`
-- [ ] Load saved form data for editing
+  - [x] project name
+  - [x] product name
+  - [x] one-line description
+  - [x] target audience
+  - [x] primary CTA
+  - [x] tone
+  - [x] style preset
+  - [x] optional features list
+  - [x] optional testimonials
+  - [x] optional FAQs
+- [x] Save form data to `input_data`
+- [x] Load saved form data for editing
 
 ### Deliverable
 A user can fill and save the landing page input form.
@@ -224,13 +252,13 @@ A user can fill and save the landing page input form.
 ---
 
 ## Milestone 4 - Style preset config
-- [ ] Create hardcoded style preset config file
+- [x] Create hardcoded style preset config file
 - [ ] Add 3 presets:
-  - [ ] modern-saas
-  - [ ] minimal-clean
-  - [ ] bold-startup
-- [ ] Expose them to the form UI
-- [ ] Ensure selected preset is saved to project
+  - [x] modern-saas
+  - [x] minimal-clean
+  - [x] bold-startup
+- [x] Expose them to the form UI
+- [x] Ensure selected preset is saved to project
 
 ### Deliverable
 A project can store and display a selected style preset.
@@ -238,17 +266,17 @@ A project can store and display a selected style preset.
 ---
 
 ## Milestone 5 - Page schema and validation
-- [ ] Define TypeScript types for generated landing page
-- [ ] Add validation layer using Zod or equivalent
-- [ ] Create reusable schema/type file for:
-  - [ ] theme
-  - [ ] hero
-  - [ ] socialProof
-  - [ ] features
-  - [ ] howItWorks
-  - [ ] faq
-  - [ ] cta
-- [ ] Add parser/validator for model response
+- [x] Define TypeScript types for generated landing page
+- [x] Add validation layer using Zod or equivalent
+- [x] Create reusable schema/type file for:
+  - [x] theme
+  - [x] hero
+  - [x] socialProof
+  - [x] features
+  - [x] howItWorks
+  - [x] faq
+  - [x] cta
+- [x] Add parser/validator for model response
 
 ### Deliverable
 The app has a typed validated schema for generated pages.
@@ -256,17 +284,17 @@ The app has a typed validated schema for generated pages.
 ---
 
 ## Milestone 6 - LLM generation
-- [ ] Add OpenAI integration
-- [ ] Create generation prompt builder
+- [x] Add OpenAI integration
+- [x] Create generation prompt builder
 - [ ] Prompt must include:
-  - [ ] form data
-  - [ ] selected style preset guidance
-  - [ ] strict JSON output instructions
-  - [ ] fixed page schema instructions
-- [ ] Build API route or server action for generation
-- [ ] Parse and validate response
-- [ ] Save valid output to `generated_page`
-- [ ] Add minimal error handling for invalid output
+  - [x] form data
+  - [x] selected style preset guidance
+  - [x] strict JSON output instructions
+  - [x] fixed page schema instructions
+- [x] Build API route or server action for generation
+- [x] Parse and validate response
+- [x] Save valid output to `generated_page`
+- [x] Add minimal error handling for invalid output
 
 ### Deliverable
 A user can click Generate and get a valid saved landing page JSON object.
@@ -275,15 +303,15 @@ A user can click Generate and get a valid saved landing page JSON object.
 
 ## Milestone 7 - Landing page renderer
 - [ ] Create React components for:
-  - [ ] HeroSection
-  - [ ] SocialProofSection
-  - [ ] FeaturesSection
-  - [ ] HowItWorksSection
-  - [ ] FaqSection
-  - [ ] FinalCtaSection
-- [ ] Create preview page using `generated_page`
-- [ ] Apply theme colors from generated page
-- [ ] Make preview readable and polished enough for MVP
+  - [x] HeroSection
+  - [x] SocialProofSection
+  - [x] FeaturesSection
+  - [x] HowItWorksSection
+  - [x] FaqSection
+  - [x] FinalCtaSection
+- [x] Create preview page using `generated_page`
+- [x] Apply theme colors from generated page
+- [x] Make preview readable and polished enough for MVP
 
 ### Deliverable
 The generated landing page can be previewed inside the app.
@@ -291,14 +319,14 @@ The generated landing page can be previewed inside the app.
 ---
 
 ## Milestone 8 - Editing generated content
-- [ ] Build simple form-based editor for generated content
+- [x] Build simple form-based editor for generated content
 - [ ] Allow editing:
-  - [ ] hero headline/subheadline/CTAs
-  - [ ] feature items
-  - [ ] FAQ items
-  - [ ] CTA headline/button text
-  - [ ] social proof labels if present
-- [ ] Save edited content back to `generated_page`
+  - [x] hero headline/subheadline/CTAs
+  - [x] feature items
+  - [x] FAQ items
+  - [x] CTA headline/button text
+  - [x] social proof labels if present
+- [x] Save edited content back to `generated_page`
 
 ### Deliverable
 A user can manually improve the generated page before publishing.
@@ -380,12 +408,12 @@ This can be adapted, but do not overcomplicate it.
 
 The MVP is done when:
 
-- [ ] a user can sign in
-- [ ] a user can create a project
-- [ ] a user can submit the form
-- [ ] a landing page is generated from the form
-- [ ] the result is rendered in-app
-- [ ] the user can edit text fields
+- [x] a user can sign in
+- [x] a user can create a project
+- [x] a user can submit the form
+- [x] a landing page is generated from the form
+- [x] the result is rendered in-app
+- [x] the user can edit text fields
 - [ ] the user can publish it
 - [ ] a public URL works
 
@@ -404,14 +432,13 @@ The MVP is done when:
 
 ## Immediate Next Step
 
-Start with **Milestone 1**.
+Continue with **Milestone 9**.
 
-First task:
-- inspect the current repo
-- identify what already exists
-- determine whether to scaffold or extend
-- then implement the first end-to-end slice:
+Next task:
+- add a publish action/button on the project detail page
+- generate and persist a unique `published_slug`
+- set `published = true`
+- create the public route at `/p/[slug]`
+- render the saved `generated_page` from the database
 
-> sign in + dashboard + create project + persist project
-
-Do not jump into LLM generation before the project creation flow exists.
+After publish works, move to Milestone 10 polish.
