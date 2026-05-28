@@ -14,6 +14,7 @@ import {
 
 export type SaveProjectIntakeState = {
   errors?: Record<string, string[]>;
+  error?: string;
   message?: string;
   saved?: boolean;
 };
@@ -58,7 +59,7 @@ export async function saveProjectIntake(
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: "Fix the highlighted fields and save again.",
+      error: "Fix the highlighted fields and save again.",
     };
   }
 
@@ -77,7 +78,7 @@ export async function saveProjectIntake(
 
   if (result.count === 0) {
     return {
-      message: "Project not found.",
+      error: "Project not found.",
     };
   }
 
@@ -85,7 +86,7 @@ export async function saveProjectIntake(
   revalidatePath(`/project/${projectId}`);
 
   return {
-    message: "Intake saved.",
+    message: "Intake saved. Generation now uses the latest project brief.",
     saved: true,
   };
 }
@@ -150,7 +151,7 @@ export async function generateProjectPage(
 
     return {
       generated: true,
-      message: "Landing page generated and saved.",
+      message: "Landing page generated and saved. Scroll down to review the draft and editor.",
     };
   } catch (error) {
     return {
@@ -257,7 +258,7 @@ export async function saveGeneratedPageEdits(
   revalidatePath(`/project/${projectId}`);
 
   return {
-    message: "Generated page edits saved.",
+    message: "Generated page edits saved. This project now uses the updated copy.",
     saved: true,
   };
 }

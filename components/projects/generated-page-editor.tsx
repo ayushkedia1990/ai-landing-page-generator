@@ -6,6 +6,7 @@ import {
   saveGeneratedPageEdits,
   type SaveGeneratedPageEditsState,
 } from "@/app/project/[id]/actions";
+import { ActionFeedback } from "@/components/projects/action-feedback";
 import type { LandingPage } from "@/lib/page-schema";
 
 type GeneratedPageEditorProps = {
@@ -74,6 +75,7 @@ export function GeneratedPageEditor({
   return (
     <form
       action={formAction}
+      aria-busy={pending}
       className="glass-panel space-y-8 rounded-4xl border border-border/80 p-6 shadow-[0_18px_50px_rgba(16,19,35,0.08)] sm:p-8"
     >
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -84,6 +86,10 @@ export function GeneratedPageEditor({
           <h3 className="mt-3 text-2xl font-semibold tracking-tight">
             Edit the sections users care about most.
           </h3>
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
+            These fields write back to the stored landing page JSON that powers the
+            generated draft for this project.
+          </p>
         </div>
         <button
           type="submit"
@@ -94,8 +100,18 @@ export function GeneratedPageEditor({
         </button>
       </div>
 
-      {state.message ? <p className="text-sm text-success">{state.message}</p> : null}
-      {state.error ? <p className="text-sm text-danger">{state.error}</p> : null}
+      {state.saved && state.message ? (
+        <ActionFeedback tone="success" title="Edits saved">
+          {state.message}
+        </ActionFeedback>
+      ) : null}
+
+      {state.error ? (
+        <ActionFeedback tone="error" title="Could not save edits">
+          {state.error}
+        </ActionFeedback>
+      ) : null}
+
       {state.issues?.length ? (
         <div className="rounded-3xl border border-danger/20 bg-danger/8 px-4 py-4 text-sm text-danger">
           <p className="font-semibold">Validation issues</p>

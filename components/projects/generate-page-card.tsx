@@ -6,6 +6,7 @@ import {
   generateProjectPage,
   type GenerateProjectPageState,
 } from "@/app/project/[id]/actions";
+import { ActionFeedback } from "@/components/projects/action-feedback";
 
 type GeneratePageCardProps = {
   projectId: string;
@@ -28,11 +29,11 @@ export function GeneratePageCard({
       </p>
       <h2 className="mt-3 text-2xl font-semibold">Create the first landing page draft.</h2>
       <p className="mt-3 text-sm leading-7 text-muted-foreground">
-        This action sends the saved intake form to OpenAI and validates the response
-        against the fixed landing page schema before saving it.
+        This action sends the saved intake form to the configured AI provider and
+        validates the response against the fixed landing page schema before saving it.
       </p>
 
-      <form action={formAction} className="mt-6 space-y-4">
+      <form action={formAction} aria-busy={pending} className="mt-6 space-y-4">
         <button
           type="submit"
           disabled={pending || !canGenerate}
@@ -42,16 +43,22 @@ export function GeneratePageCard({
         </button>
 
         {!canGenerate ? (
-          <p className="text-sm text-muted-foreground">
+          <ActionFeedback tone="neutral" title="Generation locked">
             Save a complete intake form first. Generation only uses stored project data.
-          </p>
+          </ActionFeedback>
         ) : null}
 
-        {state.message ? (
-          <p className="text-sm text-success">{state.message}</p>
+        {state.generated && state.message ? (
+          <ActionFeedback tone="success" title="Draft ready">
+            {state.message}
+          </ActionFeedback>
         ) : null}
 
-        {state.error ? <p className="text-sm text-danger">{state.error}</p> : null}
+        {state.error ? (
+          <ActionFeedback tone="error" title="Generation failed">
+            {state.error}
+          </ActionFeedback>
+        ) : null}
       </form>
     </section>
   );

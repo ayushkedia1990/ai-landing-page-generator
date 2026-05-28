@@ -6,6 +6,7 @@ import {
   saveProjectIntake,
   type SaveProjectIntakeState,
 } from "@/app/project/[id]/actions";
+import { ActionFeedback } from "@/components/projects/action-feedback";
 import type { StylePreset } from "@/lib/style-presets";
 import type { ProjectIntakeInput } from "@/lib/validations/project";
 
@@ -39,6 +40,7 @@ export function ProjectIntakeForm({
   return (
     <form
       action={formAction}
+      aria-busy={pending}
       className="glass-panel rounded-4xl border border-border/80 p-6 shadow-[0_18px_50px_rgba(16,19,35,0.08)] sm:p-8"
     >
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -59,14 +61,20 @@ export function ProjectIntakeForm({
         </button>
       </div>
 
-      {state.message ? (
-        <p
-          className={`mt-5 text-sm ${
-            state.saved ? "text-success" : "text-muted-foreground"
-          }`}
-        >
-          {state.message}
-        </p>
+      {state.saved && state.message ? (
+        <div className="mt-5">
+          <ActionFeedback tone="success" title="Intake saved">
+            {state.message}
+          </ActionFeedback>
+        </div>
+      ) : null}
+
+      {state.error ? (
+        <div className="mt-5">
+          <ActionFeedback tone="error" title="Could not save intake">
+            {state.error}
+          </ActionFeedback>
+        </div>
       ) : null}
 
       <div className="mt-8 grid gap-5 md:grid-cols-2">

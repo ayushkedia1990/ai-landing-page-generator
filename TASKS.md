@@ -29,9 +29,14 @@ Completed so far:
 - OpenRouter now falls back to the documented free model slug when `OPENAI_MODEL` is left blank
 - OpenRouter now uses the live `openrouter/free` router by default so blank model config does not point at a stale free-model slug
 - Vercel deployments now boot in public preview mode when Clerk env vars are missing instead of crashing in middleware
+- Deployment setup guidance is now documented for Clerk, hosted Postgres, and OpenRouter environment variables on Vercel
+- Dashboard and project routes now have route-level loading, not-found, and error UI instead of generic framework fallbacks
+- Next 16 routing now uses `proxy.ts` instead of the deprecated `middleware.ts` convention
+- Intake, generation, and edit actions now use clearer success/error feedback with provider-accurate copy in the project workspace
+- Empty-state coverage is now confirmed across dashboard, preview, and project-not-found surfaces
 
 Current planned next slice:
-- Milestone 10 polish for empty states, error handling, and deploy readiness
+- Milestone 10 polish for manual flow validation and deploy readiness
 - Publish flow is intentionally deferred for now
 
 Current blocker/status notes:
@@ -40,6 +45,11 @@ Current blocker/status notes:
 - Current generation issue: a malformed pasted OpenRouter key should now fail with a clearer auth message instead of the opaque `User not found` provider error.
 - Current generation issue update: if `OPENAI_MODEL` is left blank with OpenRouter enabled, generation now routes through `openrouter/free`; if a manually pinned slug has no endpoints, the app now returns a targeted fix message.
 - Vercel deployment note: set `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` to enable auth, and replace the local `DATABASE_URL` with a hosted Postgres connection string if you want dashboard/project flows to work in production.
+- Current support slice: clarify where each production secret comes from and which values are required versus optional for a working Vercel MVP.
+- Current polish update: dashboard and project route loading/ownership/failure states now surface explicit UI for real users instead of generic loading or error pages.
+- Deploy-readiness update: the auth request boundary now uses the current Next 16 `proxy.ts` convention, removing the middleware deprecation warning from production builds.
+- Current feedback update: the intake, generation, and generated-page edit actions now surface stronger success and failure states instead of low-emphasis status text.
+- Empty-state audit update: dashboard already covers the zero-project case, the project page already covers the no-generated-preview case, and the new project `not-found` route covers missing or unauthorized records.
 
 The MVP should allow a user to:
 1. sign in
@@ -356,11 +366,11 @@ A user can publish a landing page and access it via a public URL.
 ---
 
 ## Milestone 10 - MVP polish
-- [ ] Add loading states
-- [ ] Add empty states
-- [ ] Add basic error states
-- [ ] Protect project routes by auth
-- [ ] Ensure users can only access their own projects
+- [x] Add loading states
+- [x] Add empty states
+- [x] Add basic error states
+- [x] Protect project routes by auth
+- [x] Ensure users can only access their own projects
 - [ ] Test create -> generate -> edit -> publish flow
 - [ ] Make app deployable
 
@@ -444,9 +454,8 @@ The MVP is done when:
 Continue with **Milestone 10** while publish stays deferred.
 
 Next task:
-- add loading and empty states where the UX is still rough
-- tighten basic error states around generation and editing
-- confirm auth and ownership checks across project routes
+- run a manual create -> intake save -> generate -> edit verification pass
+- finish the deployment checklist for Vercel MVP readiness
 - keep publish flow deferred until requested again
 
 When polish is done, revisit publish only if requested.
