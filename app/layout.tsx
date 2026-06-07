@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import { isClerkConfigured } from "@/lib/clerk";
+import { Header } from "@/components/header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,12 +26,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const content = isClerkConfigured() ? <ClerkProvider>{children}</ClerkProvider> : children;
+  const content = (
+    <div className="flex min-h-screen flex-col">
+      <Header />
+      <div className="flex-1">{children}</div>
+    </div>
+  );
+
+  const wrappedContent = isClerkConfigured() ? <ClerkProvider>{content}</ClerkProvider> : content;
 
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="min-h-screen bg-background text-foreground antialiased">
-        {content}
+        {wrappedContent}
       </body>
     </html>
   );

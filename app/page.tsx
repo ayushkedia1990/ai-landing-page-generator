@@ -15,35 +15,7 @@ export default async function Home() {
 
   return (
     <main className="px-6 py-8 text-foreground sm:px-8 lg:px-12">
-      <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl flex-col justify-between gap-12">
-        <header className="flex items-center justify-between rounded-full border border-border/80 bg-card-strong px-5 py-3 shadow-[0_14px_40px_rgba(16,19,35,0.08)]">
-          <div>
-            <p className="text-sm font-medium uppercase tracking-[0.24em] text-muted-foreground">
-              AI Landing Page Generator
-            </p>
-          </div>
-          {clerkConfigured ? (
-            <div className="flex items-center gap-3 text-sm font-medium">
-              <Link
-                href="/sign-in"
-                className="rounded-full px-4 py-2 text-muted-foreground transition hover:text-foreground"
-              >
-                Sign in
-              </Link>
-              <Link
-                href="/sign-up"
-                className="rounded-full bg-foreground px-4 py-2 text-background transition hover:opacity-90"
-              >
-                Start building
-              </Link>
-            </div>
-          ) : (
-            <div className="rounded-full border border-amber-300/80 bg-amber-50 px-4 py-2 text-sm font-medium text-amber-950">
-              Preview deployment
-            </div>
-          )}
-        </header>
-
+      <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl flex-col justify-center gap-12">
         <section className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="space-y-8">
             {!clerkConfigured ? (
