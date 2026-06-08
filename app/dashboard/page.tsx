@@ -2,11 +2,12 @@ import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 
 import { CreateProjectForm } from "@/components/projects/create-project-form";
-import { requireUser } from "@/lib/auth";
+import { isLocalDevelopmentAuthFallbackEnabled, requireUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 
 export default async function DashboardPage() {
   const userId = await requireUser();
+  const usingLocalDemoAuth = isLocalDevelopmentAuthFallbackEnabled();
 
   const projects = await db.project.findMany({
     where: { userId },
@@ -36,10 +37,16 @@ export default async function DashboardPage() {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-4 self-start rounded-full border border-border bg-card-strong px-4 py-2">
-            <span className="text-sm text-muted-foreground">Account</span>
-            <UserButton />
-          </div>
+          {usingLocalDemoAuth ? (
+            <div className="self-start rounded-full border border-amber-300/80 bg-amber-50 px-4 py-2 text-sm font-medium text-amber-950">
+              Local demo mode
+            </div>
+          ) : (
+            <div className="flex items-center gap-4 self-start rounded-full border border-border bg-card-strong px-4 py-2">
+              <span className="text-sm text-muted-foreground">Account</span>
+              <UserButton />
+            </div>
+          )}
         </header>
 
         <section className="grid gap-6 lg:grid-cols-[360px_minmax(0,1fr)]">

@@ -34,9 +34,12 @@ Completed so far:
 - Next 16 routing now uses `proxy.ts` instead of the deprecated `middleware.ts` convention
 - Intake, generation, and edit actions now use clearer success/error feedback with provider-accurate copy in the project workspace
 - Empty-state coverage is now confirmed across dashboard, preview, and project-not-found surfaces
+- Local diagnosis confirmed that missing Clerk keys in `.env` force the app into preview mode; auth setup copy now explains local versus deployed configuration more clearly
+- Local development now falls back to a demo user when Clerk keys are missing so project creation and preview work again without reconfiguring auth first
+- Local dashboard runtime error was traced to a stopped Postgres container; Docker Desktop was relaunched, the `ai-landing-page-generator-postgres` container was restarted, and `/dashboard` now renders again
 
 Current planned next slice:
-- Milestone 10 polish for manual flow validation and deploy readiness
+- Milestone 10 polish for manual flow validation and deploy readiness using local demo mode or restored Clerk auth
 - Publish flow is intentionally deferred for now
 
 Current blocker/status notes:
@@ -50,6 +53,9 @@ Current blocker/status notes:
 - Deploy-readiness update: the auth request boundary now uses the current Next 16 `proxy.ts` convention, removing the middleware deprecation warning from production builds.
 - Current feedback update: the intake, generation, and generated-page edit actions now surface stronger success and failure states instead of low-emphasis status text.
 - Empty-state audit update: dashboard already covers the zero-project case, the project page already covers the no-generated-preview case, and the new project `not-found` route covers missing or unauthorized records.
+- Local runtime diagnosis: the root `.env` currently has `DATABASE_URL`, `OPENROUTER_API_KEY`, and `OPENAI_MODEL`, but it is missing `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY`, so local auth routes intentionally fall back to preview mode.
+- Local auth override update: in development only, missing Clerk keys now map to a shared demo user ID so the dashboard, project creation, and project detail flows remain usable; production still requires real Clerk keys.
+- Local recovery update: the dashboard error screen was caused by Prisma failing to reach `localhost:5433`; the root issue was that Docker Desktop was not running and the `ai-landing-page-generator-postgres` container was stopped. Both have now been restored and the live dashboard route returns `200` again.
 
 The MVP should allow a user to:
 1. sign in
@@ -291,6 +297,7 @@ A project can store and display a selected style preset.
   - [x] theme
   - [x] hero
   - [x] socialProof
+  
   - [x] features
   - [x] howItWorks
   - [x] faq
@@ -454,6 +461,7 @@ The MVP is done when:
 Continue with **Milestone 10** while publish stays deferred.
 
 Next task:
+- run a local demo-mode verification pass for dashboard -> project create -> project detail
 - run a manual create -> intake save -> generate -> edit verification pass
 - finish the deployment checklist for Vercel MVP readiness
 - keep publish flow deferred until requested again
