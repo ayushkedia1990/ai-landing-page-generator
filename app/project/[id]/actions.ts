@@ -36,6 +36,13 @@ function getTextValue(formData: FormData, key: string) {
   return String(formData.get(key) ?? "").trim();
 }
 
+function getMultiSelectValues(formData: FormData, key: string) {
+  return formData
+    .getAll(key)
+    .map((value) => String(value).trim())
+    .filter(Boolean);
+}
+
 export async function saveProjectIntake(
   projectId: string,
   _: SaveProjectIntakeState,
@@ -48,8 +55,19 @@ export async function saveProjectIntake(
     productName: formData.get("productName"),
     oneLineDescription: formData.get("oneLineDescription"),
     targetAudience: formData.get("targetAudience"),
+    outcomePromise: formData.get("outcomePromise"),
+    uniqueAdvantage: formData.get("uniqueAdvantage"),
     primaryCta: formData.get("primaryCta"),
+    ctaGoal: formData.get("ctaGoal"),
+    conversionFrameworks: getMultiSelectValues(formData, "conversionFrameworks"),
     tone: formData.get("tone"),
+    toneOfVoice: formData.get("toneOfVoice"),
+    styleDirection: formData.get("styleDirection"),
+    brandName: formData.get("brandName"),
+    brandColors: toLineItems(formData.get("brandColors")),
+    fontFamily: formData.get("fontFamily"),
+    logoUrl: formData.get("logoUrl"),
+    includeSections: getMultiSelectValues(formData, "includeSections"),
     stylePreset: formData.get("stylePreset"),
     features: toLineItems(formData.get("features")),
     testimonials: toLineItems(formData.get("testimonials")),

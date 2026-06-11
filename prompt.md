@@ -42,9 +42,10 @@ Completed so far:
 - Local diagnosis confirmed that missing Clerk keys in `.env` force the app into preview mode; auth setup copy now explains local versus deployed configuration more clearly
 - Local development now falls back to a demo user when Clerk keys are missing so project creation and preview work again without reconfiguring auth first
 - Local dashboard runtime error was traced to a stopped Postgres container; Docker Desktop was relaunched, the `ai-landing-page-generator-postgres` container was restarted, and `/dashboard` now renders again
+- Backend intake + generation prompt pipeline now supports the expanded sidebar controls: offer outcome/advantage, CTA goal, conversion frameworks, style direction, brand colors, brand name, tone-of-voice, font, logo URL, and include-section toggles
 
 Current planned next slice:
-- Final polish for manual flow validation and deploy readiness using local demo mode or restored Clerk auth
+- Final polish for manual flow validation and deploy readiness after expanded intake support
 - Publish flow is deferred for now by request
 
 Current blocker/status notes:
@@ -61,6 +62,7 @@ Current blocker/status notes:
 - Local runtime diagnosis: the root `.env` currently has `DATABASE_URL`, `OPENROUTER_API_KEY`, and `OPENAI_MODEL`, but it is missing `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY`, so local auth routes intentionally fall back to preview mode.
 - Local auth override update: in development only, missing Clerk keys now map to a shared demo user ID so the dashboard, project creation, and project detail flows remain usable; production still requires real Clerk keys.
 - Local recovery update: the dashboard error screen was caused by Prisma failing to reach `localhost:5433`; the root issue was that Docker Desktop was not running and the `ai-landing-page-generator-postgres` container was stopped. Both have now been restored and the live dashboard route returns `200` again.
+- Intake scope update: include-section choices now guide generation emphasis. Sections outside the fixed MVP output schema are folded into supported schema sections until full renderer expansion is requested.
 
 ## Core product goal
 
@@ -205,8 +207,17 @@ Suggested fields:
 - one-line description
 - target audience
 - primary CTA
+- CTA goal (book call, purchase, waitlist, lead magnet, webinar)
+- conversion framework tags (AIDA, D2C, BAB, PAS, FAB, StoryBrand)
 - style preset
 - tone
+- tone of voice
+- advanced style direction
+- brand name
+- brand colors (hex list)
+- font family
+- logo URL (optional)
+- include-section toggles (hero, proof, problem, features, how-it-works, visual demo, transformation, testimonials, comparison, pricing, FAQ, final CTA, lead magnet, backstory, calendar)
 - optional features list
 - optional testimonials
 - optional FAQs

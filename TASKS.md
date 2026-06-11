@@ -37,9 +37,10 @@ Completed so far:
 - Local diagnosis confirmed that missing Clerk keys in `.env` force the app into preview mode; auth setup copy now explains local versus deployed configuration more clearly
 - Local development now falls back to a demo user when Clerk keys are missing so project creation and preview work again without reconfiguring auth first
 - Local dashboard runtime error was traced to a stopped Postgres container; Docker Desktop was relaunched, the `ai-landing-page-generator-postgres` container was restarted, and `/dashboard` now renders again
+- Backend intake + generation prompt pipeline now supports the expanded sidebar controls: offer outcome/advantage, CTA goal, conversion frameworks, style direction, brand colors, brand name, tone-of-voice, font, logo URL, and include-section toggles
 
 Current planned next slice:
-- Milestone 10 polish for manual flow validation and deploy readiness using local demo mode or restored Clerk auth
+- Milestone 10 polish for manual flow validation and deploy readiness after expanded intake support
 - Publish flow is intentionally deferred for now
 
 Current blocker/status notes:
@@ -56,6 +57,7 @@ Current blocker/status notes:
 - Local runtime diagnosis: the root `.env` currently has `DATABASE_URL`, `OPENROUTER_API_KEY`, and `OPENAI_MODEL`, but it is missing `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY`, so local auth routes intentionally fall back to preview mode.
 - Local auth override update: in development only, missing Clerk keys now map to a shared demo user ID so the dashboard, project creation, and project detail flows remain usable; production still requires real Clerk keys.
 - Local recovery update: the dashboard error screen was caused by Prisma failing to reach `localhost:5433`; the root issue was that Docker Desktop was not running and the `ai-landing-page-generator-postgres` container was stopped. Both have now been restored and the live dashboard route returns `200` again.
+- Intake scope update: include-section choices now guide generation emphasis. Sections outside the fixed MVP output schema are folded into supported schema sections until full renderer expansion is requested.
 
 The MVP should allow a user to:
 1. sign in
@@ -262,8 +264,19 @@ A signed-in user can create and open a project.
   - [x] product name
   - [x] one-line description
   - [x] target audience
+  - [x] outcome promise
+  - [x] unique advantage
   - [x] primary CTA
+  - [x] CTA goal
+  - [x] conversion framework tags
   - [x] tone
+  - [x] tone of voice
+  - [x] advanced style direction
+  - [x] brand name
+  - [x] brand colors
+  - [x] font family
+  - [x] logo URL (optional)
+  - [x] include-section toggles
   - [x] style preset
   - [x] optional features list
   - [x] optional testimonials
@@ -461,6 +474,7 @@ The MVP is done when:
 Continue with **Milestone 10** while publish stays deferred.
 
 Next task:
+- run a full manual intake save pass using all new sidebar options and verify they persist
 - run a local demo-mode verification pass for dashboard -> project create -> project detail
 - run a manual create -> intake save -> generate -> edit verification pass
 - finish the deployment checklist for Vercel MVP readiness

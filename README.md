@@ -1,4 +1,16 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## AI Landing Page Generator MVP
+
+This app generates structured landing page JSON from a guided intake form and renders it with fixed React sections.
+
+### Current intake options supported by backend
+
+- Offer: project name, product name, one-line description, target audience, outcome promise, unique advantage, primary CTA, CTA goal
+- Conversion logic: AIDA, D2C, BAB, PAS, FAB, StoryBrand
+- Branding identity: style preset, advanced style direction, tone, tone of voice, brand name, brand colors, font family, optional logo URL
+- Section preferences: hero, social proof, problem, features, how-it-works, visual demo, transformation, testimonials, comparison, pricing, FAQ, final CTA, lead magnet, backstory, calendar
+- Optional content: features list, testimonials, FAQs
+
+Section preferences are included in the generation prompt. Sections outside the current fixed landing page schema are folded into supported sections until renderer expansion is added.
 
 ## Getting Started
 
@@ -15,6 +27,17 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Local setup notes
+
+- The app expects PostgreSQL on port `5433` by default (`DATABASE_URL` in `.env.example`).
+- If Clerk keys are omitted in development, local demo mode is used for project routes.
+- Run Prisma setup after cloning:
+
+```bash
+npx prisma generate
+npx prisma db push
+```
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 

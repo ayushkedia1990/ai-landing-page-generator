@@ -44,7 +44,7 @@ export async function Header() {
                 <button className="rounded-md bg-[#4F46E5] px-4 py-1.5 text-sm font-medium text-white hover:bg-[#4338CA]">
                   Upgrade
                 </button>
-                <UserButton afterSignOutUrl="/" />
+                <UserButton />
               </>
             ) : (
               <Link href="/sign-in" className="rounded-md bg-[#4F46E5] px-4 py-1.5 text-sm font-medium text-white hover:bg-[#4338CA]">
