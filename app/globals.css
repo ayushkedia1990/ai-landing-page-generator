@@ -1,17 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Lato:wght@400;700&family=Montserrat:wght@500;600;700&family=IBM+Plex+Sans:wght@400;600;700&family=Raleway:wght@500;600;700&family=Source+Sans+Pro:wght@400;600;700&family=Ubuntu:wght@400;500;700&family=Outfit:wght@500;600;700&family=DM+Sans:wght@400;500;700&family=Manrope:wght@600;700&display=swap");
+
 @import "tailwindcss";
 
 :root {
-  --background: #f4efe7;
-  --foreground: #101323;
-  --muted: #ddd4c6;
-  --muted-foreground: #665f57;
-  --card: rgba(255, 255, 255, 0.78);
-  --card-strong: rgba(255, 255, 255, 0.92);
-  --border: rgba(16, 19, 35, 0.08);
-  --accent: #1769ff;
-  --accent-foreground: #f7fbff;
-  --success: #1f7a4c;
-  --danger: #c53d3d;
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --card: #ffffff;
+  --card-strong: #f8fafc;
+  --border: #e2e8f0;
+  --accent: #3b82f6;
+  --accent-foreground: #ffffff;
+  --success: #10b981;
+  --danger: #ef4444;
+  --page-gradient: radial-gradient(circle at top left, rgba(191, 219, 254, 0.45), transparent 28%),
+    radial-gradient(circle at top right, rgba(221, 214, 254, 0.35), transparent 24%),
+    radial-gradient(circle at bottom right, rgba(254, 215, 170, 0.25), transparent 30%),
+    #ffffff;
 }
 
 @theme inline {
@@ -40,13 +46,9 @@ html {
 
 body {
   min-height: 100vh;
-  background: var(--background);
-  background-image:
-    radial-gradient(circle at top left, rgba(23, 105, 255, 0.16), transparent 28%),
-    radial-gradient(circle at top right, rgba(255, 196, 117, 0.24), transparent 22%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.54) 0%, rgba(244, 239, 231, 0.88) 100%);
+  background: var(--page-gradient);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), sans-serif;
+  font-family: var(--font-sans), sans-serif;
 }
 
 a {
@@ -54,7 +56,7 @@ a {
 }
 
 ::selection {
-  background: rgba(23, 105, 255, 0.18);
+  background: rgba(59, 130, 246, 0.18);
 }
 
 input,

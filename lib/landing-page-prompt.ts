@@ -18,6 +18,14 @@ function formatList(label: string, items: string[]) {
   return `${label}:\n- ${items.join("\n- ")}`;
 }
 
+function formatSections(sections: string[]) {
+  if (sections.length === 0) {
+    return "Sections to include: hero only";
+  }
+
+  return `Sections to include: ${sections.join(", ")}`;
+}
+
 export function buildLandingPagePrompt({
   preset,
   project,
@@ -47,13 +55,18 @@ export function buildLandingPagePrompt({
     `Theme defaults: ${JSON.stringify(theme)}`,
     `Project name: ${project.projectName}`,
     `Product name: ${project.productName}`,
+    `Brand name: ${project.brandName}`,
     `One-line description: ${project.oneLineDescription}`,
     `Target audience: ${project.targetAudience}`,
     `Primary CTA: ${project.primaryCta}`,
+    `Main CTA goal: ${project.mainCtaGoal}`,
+    `Conversion logic: ${project.conversionLogic}`,
+    `Preferred font: ${project.font}`,
     `Tone: ${project.tone}`,
     formatList("Optional features to incorporate", project.features),
     formatList("Optional testimonials to incorporate", project.testimonials),
     formatList("Optional FAQs to incorporate", project.faqs),
+    formatSections(project.sections),
   ].join("\n\n");
 
   return {

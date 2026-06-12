@@ -46,14 +46,19 @@ export async function saveProjectIntake(
   const validatedFields = projectIntakeSchema.safeParse({
     projectName: formData.get("projectName"),
     productName: formData.get("productName"),
+    brandName: formData.get("brandName"),
     oneLineDescription: formData.get("oneLineDescription"),
     targetAudience: formData.get("targetAudience"),
     primaryCta: formData.get("primaryCta"),
+    mainCtaGoal: formData.get("mainCtaGoal"),
     tone: formData.get("tone"),
+    conversionLogic: formData.get("conversionLogic"),
+    font: formData.get("font"),
     stylePreset: formData.get("stylePreset"),
     features: toLineItems(formData.get("features")),
     testimonials: toLineItems(formData.get("testimonials")),
     faqs: toLineItems(formData.get("faqs")),
+    sections: formData.getAll("sections"),
   });
 
   if (!validatedFields.success) {
