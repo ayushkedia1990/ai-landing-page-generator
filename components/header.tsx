@@ -8,7 +8,7 @@ export async function Header() {
   const userId = await getOptionalUserId();
 
   return (
-    <header className="flex h-16 w-full shrink-0 items-center justify-between border-b border-gray-200 bg-[#F4F7FB] px-6">
+    <header className="flex h-16 w-full shrink-0 items-center justify-between border-b border-slate-200 bg-white px-6">
       <div className="flex items-center gap-4">
         <Link href="/" className="flex items-center gap-2">
           <div className="flex items-center text-[#3B82F6]">
@@ -41,13 +41,13 @@ export async function Header() {
                   </svg>
                   <span>35</span>
                 </div>
-                <button className="rounded-md bg-[#4F46E5] px-4 py-1.5 text-sm font-medium text-white hover:bg-[#4338CA]">
+                <button type="button" className="rounded-lg bg-blue-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-blue-700">
                   Upgrade
                 </button>
-                <UserButton afterSignOutUrl="/" />
+                <UserButton />
               </>
             ) : (
-              <Link href="/sign-in" className="rounded-md bg-[#4F46E5] px-4 py-1.5 text-sm font-medium text-white hover:bg-[#4338CA]">
+              <Link href="/sign-in" className="rounded-lg bg-blue-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-blue-700">
                 Sign in
               </Link>
             )}

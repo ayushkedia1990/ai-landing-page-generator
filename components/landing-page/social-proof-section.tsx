@@ -6,17 +6,19 @@ type SocialProofSectionProps = {
 
 export function SocialProofSection({ socialProof }: SocialProofSectionProps) {
   return (
-    <section className="border-b border-black/5 px-6 py-8 sm:px-10">
-      <div className="space-y-4">
-        <h2 className="text-lg font-semibold tracking-tight">{socialProof.headline}</h2>
-        <div className="flex flex-wrap gap-3">
+    <section className="border-b border-slate-200 px-6 py-10 sm:px-8 sm:py-12">
+      <div className="mx-auto max-w-6xl space-y-4">
+        <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">
+          {socialProof.headline}
+        </p>
+        <div className="grid grid-cols-2 gap-3 text-sm font-medium text-slate-700 sm:grid-cols-3 lg:grid-cols-4">
           {socialProof.logos.map((logo) => (
-            <span
+            <div
               key={logo}
-              className="rounded-full border border-black/8 bg-white/75 px-4 py-2 text-sm font-medium text-black/70"
+              className="flex items-center justify-center rounded-3xl border border-slate-200 bg-white px-4 py-4 shadow-sm"
             >
               {logo}
-            </span>
+            </div>
           ))}
         </div>
       </div>

@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useActionState } from "react";
 
 import {
@@ -69,8 +71,15 @@ export function GeneratedPageEditor({
   landingPage,
   projectId,
 }: GeneratedPageEditorProps) {
+  const router = useRouter();
   const action = saveGeneratedPageEdits.bind(null, projectId);
   const [state, formAction, pending] = useActionState(action, initialState);
+
+  useEffect(() => {
+    if (state.saved) {
+      router.refresh();
+    }
+  }, [router, state.saved]);
 
   return (
     <form

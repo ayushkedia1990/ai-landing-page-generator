@@ -11,7 +11,7 @@ Ship a working MVP in **1 week**.
 
 ## Current Status
 
-Last updated: 2026-05-20
+Last updated: 2026-06-13
 
 Completed so far:
 - App scaffold, auth, Prisma setup, dashboard shell
@@ -37,10 +37,11 @@ Completed so far:
 - Local diagnosis confirmed that missing Clerk keys in `.env` force the app into preview mode; auth setup copy now explains local versus deployed configuration more clearly
 - Local development now falls back to a demo user when Clerk keys are missing so project creation and preview work again without reconfiguring auth first
 - Local dashboard runtime error was traced to a stopped Postgres container; Docker Desktop was relaunched, the `ai-landing-page-generator-postgres` container was restarted, and `/dashboard` now renders again
+- Figma-aligned project workspace UI: PageCraft split layout with left intake sidebar, preview toolbar (device toggles, Generate/Regenerate/Actions/Export), searchable dropdowns, character counters, conversion-logic chips, and updated style preset labels
 
 Current planned next slice:
-- Milestone 10 polish for manual flow validation and deploy readiness using local demo mode or restored Clerk auth
-- Publish flow is intentionally deferred for now
+- Validate the Figma-style intake and preview flow in the browser
+- Continue publish and generated page edit polish after UI validation
 
 Current blocker/status notes:
 - No active blocker from Prisma setup. Local Postgres is being provided through Docker on port `5433` because no Windows PostgreSQL service was present and port `5432` was already in use.
